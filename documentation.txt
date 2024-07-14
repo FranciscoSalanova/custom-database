@@ -1,0 +1,38 @@
+custom database
+
+1) leer un comando ingresado por el usuario via consola
+2) parsear mediante su parser correspondiente
+3) usar el resultado del parser para ejecutar la lógica del comando
+
+se utiliza la clase Table para encapsular el contenido de la tabla y permite la manipulación de los datos incluidos mediante la inyección de dependencias (lógica de los comandos)
+
+punto de partida: script.js
+
+start:
+mientras no se interrumpa la ejecución por consola
+	se le va a pedir escribir un comando al usuario
+	luego se va a intentar parsear el comando ingresado, lo que nos va a devolver el resultado de la ejecución de dicho comando
+		en caso de no haberse ingresado un comando válido, se devolverá un mensaje de error
+	finalmente se va a imprimir por consola el resultado de la ejecución del comando
+
+parseCommand:
+se obtiene el comando correspondiente a lo ingresado por el usuario por consola
+	para ello se va a tomar el array de parsers, que va a incluir cada parser creado para manejar cada comando
+	con dicho array de parsers primero se va a ejecutar un map que vaya por cada parser e intente ejecutar el parseo para el comando ingresado por el usuario
+	para obtener finalmente el comando correcto, se buscará dentro de array resultante del map aquel comando que no sea null
+si luego de recorrer el array parsers no se obtiene un comando correcto, la variable command devolverá null
+	entonces se devolverá un mensaje de error para comando inválido
+en caso de ingresarse un comando válido, finalmente se esperara la ejecución de perform para dicho comando
+
+Table:
+define una clase Table con un constructor que tiene el atributo tableName
+también se definen 3 métodos, siendo el principal insertRecord:
+	insertRecord recibe como parámetro el registro que será ingresado
+	a dicho registro le agrega un uuid
+	el método devuelve una promesa que arranca con la lectura de la data de la tabla mediante readData, otro método de la clase Table
+	readData devuelve una promesa que lee el archivo JSON especificado filePath, otro método de la clase Table que en este caso devuelve la ruta del archivo JSON que funciona como base de datos
+		en caso de haber una ruta inválida para buscar el archivo JSON se estará devolviendo un mensaje de error para Tabla no existente
+		de leerse correctamente el contenido del archivo JSON el mismo será devuelve como resolución correcta la promesa, previamente parseándose el contenido JSON para convertirlo en un objeto
+	con el objeto obtenido del archivo JSON se reescribirá el contenido de dicho archivo incluyendo todo el contenido previo (objeto obtenido) y agregándole el registro con uuid
+	finalmente se resuelve la promesa de insertRecord devolviendo el registro con uuid
+
