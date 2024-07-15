@@ -5,7 +5,8 @@
   "main": "script.js",
   "scripts": {
     "start": "node script.js",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "clearCache": "jest --clearCache"
   },
   "keywords": [],
   "author": "",

@@ -41,9 +41,7 @@ describe("#insertRecord", () => {
         recordToInsert
       )
 
-      expect(
-        JSON.parse(fs.readFileSync("data/table.json"))
-      ).toIncludeSameMembers([
+      expect(await table.readData()).toIncludeSameMembers([
         {
           _id,
           ...newRecordAttributes,
@@ -69,9 +67,7 @@ describe("#insertRecord", () => {
         recordToInsert
       )
 
-      expect(
-        JSON.parse(fs.readFileSync("data/table.json"))
-      ).toIncludeSameMembers([
+      expect(await table.readData()).toIncludeSameMembers([
         ...data,
         {
           _id,
