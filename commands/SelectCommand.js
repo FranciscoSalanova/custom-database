@@ -1,3 +1,4 @@
+const { pick } = require("lodash")
 const Table = require("../Table")
 
 class SelectCommand {
@@ -7,7 +8,15 @@ class SelectCommand {
     this.allColumns = allColumns
   }
 
-  async perform() {}
+  async perform(whereCommand) {
+    let data = await this.table.readData()
+    if (whereCommand) data = whereCommand.perform(data)
+    if (this.allColumns) return data
+
+    return data.map((object) => {
+      return pick(object, this.columns)
+    })
+  }
 }
 
 module.exports = SelectCommand
