@@ -1,9 +1,10 @@
 const InvalidCommandError = require("./Errors/InvalidCommandError")
 const parseInsertCommand = require("./parsers/insert")
 const parseSelectCommand = require("./parsers/select")
+const parseUpdateCommand = require("./parsers/update")
 const parseWhereCommand = require("./parsers/where")
 
-const parsers = [parseInsertCommand, parseSelectCommand]
+const parsers = [parseInsertCommand, parseSelectCommand, parseUpdateCommand]
 
 async function parseCommand(commandString) {
   const command = parsers

@@ -7,3 +7,27 @@ describe("With normal command", () => {
     expect(parseWhereCommand(command).conditions).toEqual({ a: 1, b: 2 })
   })
 })
+
+describe("With invalid command", () => {
+  const command = "SELECT * FROM table { nafoiunafoun }"
+
+  test("It returns undefined", () => {
+    expect(parseWhereCommand(command)).toBeUndefined()
+  })
+})
+
+describe("With no conditions", () => {
+  const command = "SELECT * FROM table WHERE "
+
+  test("It returns undefined", () => {
+    expect(parseWhereCommand(command)).toBeUndefined()
+  })
+})
+
+describe("With no WHERE clause", () => {
+  const command = "SELECT * FROM table"
+
+  test("It returns undefined", () => {
+    expect(parseWhereCommand(command)).toBeUndefined()
+  })
+})

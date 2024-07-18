@@ -29,7 +29,7 @@ class Table {
             JSON.stringify([...data, recordWithId]),
             (error) => {
               if (error) {
-                reject(error)
+                return reject(error)
               }
               resolve(recordWithId)
             }
@@ -44,6 +44,17 @@ class Table {
         if (error) return reject(new TableDoesNotExistError(this.tableName))
 
         resolve(JSON.parse(data))
+      })
+    })
+  }
+
+  overwriteTable(data) {
+    return new Promise((resolve, reject) => {
+      fs.writeFile(this.filePath, JSON.stringify(data), (error) => {
+        if (error) {
+          return reject(error)
+        }
+        resolve()
       })
     })
   }
