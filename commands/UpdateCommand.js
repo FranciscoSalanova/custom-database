@@ -15,6 +15,7 @@ class UpdateCommand {
     }
 
     const updatedRecords = []
+
     const newData = originalData.map((record) => {
       if (dataToUpdate.includes(record)) {
         const newRecord = { ...record, ...this.properties }
